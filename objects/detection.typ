@@ -9,7 +9,7 @@
 ```
 
 === Members
-==== points
+==== locations
 A list of disjoint detection locations. See @DetectionLocation.
 
 ==== altitude_mode
@@ -24,6 +24,7 @@ Either
 ```json
 {
     "point": Coordinate,
+    "time": string,
     <optional> "identification": string,
     <optional> "extensions": map
 }
