@@ -22,7 +22,7 @@ We felt that we required a structured format as opposed to e.g. a table, as data
 We chose #link("https://www.json.org/json-en.html", "JSON") due to its simplicity and amount of libraries available for writing and parsing data.
 
 = Notation used
-// ray, ray origin, segment(vec<vec<trackpoint>>), time UTC ONLY, track, detection point, tracking, detection 
+// ray, ray origin, segment(vec<vec<trackpoint>>), time UTC ONLY, track, detection point, tracking, detection
 - *Ray*: A geometrical half-line, starting at an origin point, and with a given direction extending to infinity.
 - *Track*: An information structure containing position data of an object detected by the radar over time, as well as possibly information about that object.
 - *Track segment*: A list of points belonging to a track that are meant to be visually connected together, because the radar has not lost sight of the object in between them.
@@ -36,13 +36,7 @@ Most elements in the document structure present an `extensions` member. This is 
 Extension names have the format `ISSUER_NAME`, where `ISSUER` is the name of the entity introducing the extension (e.g. COURAGEOUS or any other company using the format) and `NAME` is an arbitrary string which may only contain characters as specified by the #link("https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&abb=on&g=&i=", [`XID_Continue`]) unicode set of characters. The value associated with the key is determined by the extension's definition, and can be of any type.
 
 = Document structure
-#include "objects/document.typ"
-#include "objects/tracking.typ"
-
-#include "objects/detection.typ"
-#include "objects/util.typ"
-
-#include "examples.typ"
+#include "schema_reader.typ"
 
 = Notes & TODOs
 - The inclusion of rays is not very elegant, their name is not ideal, and they can actually refer to two possible geometric terms of location (Resulting in either a point or a ray)

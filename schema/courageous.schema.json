@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document",
+  "type": "object",
+  "required": [
+    "entries",
+    "version"
+  ],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Entry"
+      }
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "Arc": {
+      "type": "object",
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "number",
+          "format": "double"
+        },
+        "to": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "Classification": {
+      "type": "string",
+      "enum": [
+        "UAV",
+        "GCS"
+      ]
+    },
+    "Entry": {
+      "type": "object",
+      "required": [
+        "alarm",
+        "classification",
+        "cuas_origin",
+        "identification",
+        "location",
+        "record_number",
+        "system_id",
+        "time",
+        "vendor_id"
+      ],
+      "properties": {
+        "alarm": {
+          "type": "boolean"
+        },
+        "classification": {
+          "$ref": "#/definitions/Classification"
+        },
+        "cuas_origin": {
+          "$ref": "#/definitions/Position3d"
+        },
+        "detection_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "identification": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        },
+        "record_number": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "system_id": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "time": {
+          "type": "string"
+        },
+        "track_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "uas_ident": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vendor_id": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0.0
+        }
+      }
+    },
+    "Location": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "Arc"
+          ],
+          "properties": {
+            "Arc": {
+              "$ref": "#/definitions/Arc"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Quad"
+          ],
+          "properties": {
+            "Quad": {
+              "$ref": "#/definitions/Quad"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Bearing"
+          ],
+          "properties": {
+            "Bearing": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Position"
+          ],
+          "properties": {
+            "Position": {
+              "$ref": "#/definitions/Position"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "Position3d"
+          ],
+          "properties": {
+            "Position3d": {
+              "$ref": "#/definitions/Position3d"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Position": {
+      "type": "object",
+      "required": [
+        "lat",
+        "lon"
+      ],
+      "properties": {
+        "lat": {
+          "type": "number",
+          "format": "double"
+        },
+        "lon": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "Position3d": {
+      "type": "object",
+      "required": [
+        "height",
+        "lat",
+        "lon"
+      ],
+      "properties": {
+        "height": {
+          "type": "number",
+          "format": "double"
+        },
+        "lat": {
+          "type": "number",
+          "format": "double"
+        },
+        "lon": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "Quad": {
+      "type": "string",
+      "enum": [
+        "North",
+        "East",
+        "South",
+        "West"
+      ]
+    }
+  }
+}

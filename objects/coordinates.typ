@@ -1,5 +1,13 @@
 == Coordinates <Coordinates>
 === Syntax
+
+```json
+{
+    "value": Quad OR Bearing OR Position OR 3DPosition,
+    "type": "Quad" OR "Bearing" OR "Position" OR "3DPosition"
+}
+```
+// type is the Declaration Type.
 ```json
 {
     "lat": number,
@@ -7,6 +15,8 @@
     "alt": number
 }
 ```
+
+
 
 === Members
 ==== lat
