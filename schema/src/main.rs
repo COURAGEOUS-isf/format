@@ -10,11 +10,16 @@ use schemars::{schema_for, JsonSchema};
 
 #[derive(JsonSchema)]
 pub struct Document {
+    /// The 3D GPS location of the CUAS recorded.
+    // TODO change docs
+    static_cuas_location: Position3d,
     // schema present too, which is where the version/standard is defined
     /// Detection sets present in the document, mapped by an unique ID.
     detection: HashMap<u64, Detection>,
     /// Tracks present in the document, mapped by an unique ID.
     tracks: HashMap<String, Track>,
+    vendor_name: String,
+    system_name: String,
 }
 
 #[derive(JsonSchema)]
@@ -27,6 +32,8 @@ pub struct Detection {
     uas_id: Option<u64>,
     /// A list of records associated with this detection.
     records: Vec<Record>,
+    /// Free-form text.
+    name: Option<String>,
 }
 
 #[derive(JsonSchema)]
@@ -39,15 +46,19 @@ pub struct Track {
     uas_id: u64,
     /// A list of records associated with this track.
     records: Vec<Record>,
+    /// Free-form text.
+    name: Option<String>,
 }
 
 // for the company: schema + documentation
-// System id and vendor id aren't relevant here because they are specific to CPNI (UK National Protective Security Authority) and they refer to the radar system
 // TODO better docs
+// TODO fix required *
+// TODO change detection & tracking to arrays
 
 #[derive(JsonSchema)]
 pub struct Record {
-    /// UTC time in the RFC 3339 format for date and time (As described in https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+    /// UTC time in the RFC 3339 format for date and time (As described in
+    /// https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
     #[schemars(regex(pattern = r"^((?:(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2}(?:\.\d+)?))Z?)$"))]
     time: String,
     /// An unique number that identifies this record between all other ones present in the document.
@@ -55,6 +66,9 @@ pub struct Record {
     /// Classification of the record.
     classification: Classification,
     /// Whether the alarm function of the CUAS system is active or not.
+    /// An Alarm is defined as the function of a CUAS system alerting an Operator via the HMI and
+    /// the generation of associated data in the UAS Activity Log, as a result of Declared UAS
+    /// activity.
     alarm: bool,
     /// How certainly should the alarm be on, as a value from 0 (Least likely) to 1 (Most likely).
     #[validate(range(min = 0., max = 1.))]
@@ -63,8 +77,9 @@ pub struct Record {
     location: Location,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
     identification: String,
-    /// The 3D GPS location of the CUAS recorded on this instant.
-    cuas_origin: Position3d,
+    /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
+    /// static_cuas_location.
+    cuas_location: Position3d,
 }
 
 #[derive(JsonSchema)]
@@ -82,7 +97,7 @@ pub enum Location {
     Quad(Quad),
     // clockwise from true north (degrees)
     Bearing(f64),
-    Position(Position),
+    Position2d(Position2d),
     Position3d(Position3d),
     BearingElevation {
         bearing: f64,
@@ -97,20 +112,27 @@ pub enum Location {
 
 #[derive(JsonSchema)]
 pub struct Arc {
+    /// Minimum compass angle from the CUAS System to the UAS in degrees.
     from: f64,
+    /// Maximum compass angle from the CUAS System to the UAS in degrees.
     to: f64,
 }
 
 #[derive(JsonSchema)]
-pub struct Position {
+pub struct Position2d {
+    /// GPS latitude of the UAS measured in degrees.
     lat: f64,
+    /// GPS longitude of the UAS measured in degrees.
     lon: f64,
 }
 
 #[derive(JsonSchema)]
 pub struct Position3d {
+    /// GPS latitude of the UAS measured in degrees.
     lat: f64,
+    /// GPS longitude of the UAS measured in degrees.
     lon: f64,
+    /// Height of the UAS measured in meters from sea level.
     height: f64,
 }
 
