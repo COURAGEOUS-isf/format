@@ -73,7 +73,7 @@ pub struct Record {
     /// How certainly should the alarm be on, as a value from 0 (Least likely) to 1 (Most likely).
     #[validate(range(min = 0., max = 1.))]
     alarm_certainty: f64,
-    /// The UAS location, which may be given in one of several declaration types.
+    /// The location of the target, which may be given in one of several declaration types.
     location: Location,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
     identification: String,
@@ -91,18 +91,19 @@ pub enum Classification {
 }
 
 #[derive(JsonSchema)]
+/// Location of an object, which may be relative to the CUAS.
 pub enum Location {
     // clockwise: from -> to (degrees)
-    /// Circular arc within which the UAS has been observed.
+    /// Circular arc relative to the CUAS within which the object resides.
     Arc(Arc),
-    /// Compass quadrant where the UAS has been observed
+    /// Compass quadrant where the UAS has been observed.
     Quad(Quad),
     // clockwise from true north (degrees)
     /// Clockwise angle in degrees from true north where the UAS has been observed.
     Bearing(f64),
-    /// Flat 2D position of the UAS given in Latitude and Longitude
+    /// Flat 2D position given in Latitude and Longitude.
     Position2d(Position2d),
-    /// 3D position of the UAS given in Latitude, Longitude and height.
+    /// 3D position given in Latitude, Longitude and height.
     Position3d(Position3d),
     /// Ray where the UAS has been observed, given in bearing and elevation
     BearingElevation {
@@ -117,7 +118,7 @@ pub enum Location {
         bearing: f64,
         /// Elevation over the horizon of the UAS relative to the CUAS given in degrees.
         elevation: f64,
-        /// Distance from the UAS to the CUAS given in metres.
+        /// Distance from the UAS to the CUAS given in meters.
         distance: f64,
     },
 }
@@ -132,7 +133,7 @@ pub struct Arc {
 }
 
 #[derive(JsonSchema)]
-/// Compass quadrant where the UAS has been observed
+/// Compass quadrant where the UAS has been observed.
 pub enum Quad {
     North,
     East,
@@ -141,7 +142,7 @@ pub enum Quad {
 }
 
 #[derive(JsonSchema)]
-/// Flat 2D position of the UAS given in Latitude and Longitude
+/// Flat 2D position of the UAS given in Latitude and Longitude.
 pub struct Position2d {
     /// GPS latitude of the UAS measured in degrees.
     lat: f64,
@@ -156,7 +157,7 @@ pub struct Position3d {
     lat: f64,
     /// GPS longitude of the UAS measured in degrees.
     lon: f64,
-    /// Height of the UAS measured in metres from sea level.
+    /// Height of the UAS measured in meters from sea level.
     height: f64,
 }
 
