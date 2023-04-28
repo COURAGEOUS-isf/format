@@ -1,230 +1,327 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Document",
-  "type": "object",
-  "required": [
-    "entries",
-    "version"
-  ],
-  "properties": {
-    "entries": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Entry"
-      }
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Document",
+    "type": "object",
+    "required": [
+        "detection",
+        "tracks"
+    ],
+    "properties": {
+        "detection": {
+            "description": "Detection sets present in the document, mapped by an unique ID.",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/Detection"
+            }
+        },
+        "tracks": {
+            "description": "Tracks present in the document, mapped by an unique ID.",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/Track"
+            }
+        }
     },
-    "version": {
-      "type": "string"
+    "definitions": {
+        "Arc": {
+            "type": "object",
+            "required": [
+                "from",
+                "to"
+            ],
+            "properties": {
+                "from": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "to": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "Classification": {
+            "type": "string",
+            "enum": [
+                "UAV",
+                "GCS"
+            ]
+        },
+        "Detection": {
+            "type": "object",
+            "required": [
+                "records"
+            ],
+            "properties": {
+                "records": {
+                    "description": "A list of records associated with this detection.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Record"
+                    }
+                },
+                "uas_id": {
+                    "description": "An unique ID used to associate this detection with a specific UAS. The number itself is not relevant, it just needs to be unique per UAS.\n\nIf null, means the system was not able to identify the records present along with this object with any specific UAS.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "format": "uint64",
+                    "minimum": 0.0
+                }
+            }
+        },
+        "Location": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "required": [
+                        "Arc"
+                    ],
+                    "properties": {
+                        "Arc": {
+                            "$ref": "#/definitions/Arc"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "Quad"
+                    ],
+                    "properties": {
+                        "Quad": {
+                            "$ref": "#/definitions/Quad"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "Bearing"
+                    ],
+                    "properties": {
+                        "Bearing": {
+                            "type": "number",
+                            "format": "double"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "Position"
+                    ],
+                    "properties": {
+                        "Position": {
+                            "$ref": "#/definitions/Position"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "Position3d"
+                    ],
+                    "properties": {
+                        "Position3d": {
+                            "$ref": "#/definitions/Position3d"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "BearingElevation"
+                    ],
+                    "properties": {
+                        "BearingElevation": {
+                            "type": "object",
+                            "required": [
+                                "bearing",
+                                "elevation"
+                            ],
+                            "properties": {
+                                "bearing": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "elevation": {
+                                    "type": "number",
+                                    "format": "double"
+                                }
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "required": [
+                        "BearingElevationDistance"
+                    ],
+                    "properties": {
+                        "BearingElevationDistance": {
+                            "type": "object",
+                            "required": [
+                                "bearing",
+                                "distance",
+                                "elevation"
+                            ],
+                            "properties": {
+                                "bearing": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "distance": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "elevation": {
+                                    "type": "number",
+                                    "format": "double"
+                                }
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "Position": {
+            "type": "object",
+            "required": [
+                "lat",
+                "lon"
+            ],
+            "properties": {
+                "lat": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "lon": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "Position3d": {
+            "type": "object",
+            "required": [
+                "height",
+                "lat",
+                "lon"
+            ],
+            "properties": {
+                "height": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "lat": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "lon": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "Quad": {
+            "type": "string",
+            "enum": [
+                "North",
+                "East",
+                "South",
+                "West"
+            ]
+        },
+        "Record": {
+            "type": "object",
+            "required": [
+                "alarm",
+                "alarm_certainty",
+                "classification",
+                "cuas_origin",
+                "identification",
+                "location",
+                "record_number",
+                "time"
+            ],
+            "properties": {
+                "alarm": {
+                    "description": "Whether the alarm function of the CUAS system is active or not.",
+                    "type": "boolean"
+                },
+                "alarm_certainty": {
+                    "description": "How certainly should the alarm be on, as a value from 0 (Least likely) to 1 (Most likely).",
+                    "type": "number",
+                    "format": "double",
+                    "maximum": 1.0,
+                    "minimum": 0.0
+                },
+                "classification": {
+                    "$ref": "#/definitions/Classification"
+                },
+                "cuas_origin": {
+                    "description": "The 3D GPS location of the CUAS recorded on this instant.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/Position3d"
+                        }
+                    ]
+                },
+                "identification": {
+                    "description": "Free form text, possibly describing the model or configuration of the UAS identified.",
+                    "type": "string"
+                },
+                "location": {
+                    "description": "The UAS location, which may be given in one of several declaration types.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/Location"
+                        }
+                    ]
+                },
+                "record_number": {
+                    "description": "An unique number that identifies this record between all other ones present in the document.",
+                    "type": "integer",
+                    "format": "uint64",
+                    "minimum": 0.0
+                },
+                "time": {
+                    "description": "UTC time in the RFC 3339 format for date and time (As described in https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)",
+                    "type": "string",
+                    "pattern": "^((?:(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?))Z?)$"
+                }
+            }
+        },
+        "Track": {
+            "type": "object",
+            "required": [
+                "records",
+                "uas_id"
+            ],
+            "properties": {
+                "records": {
+                    "description": "A list of records associated with this track.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Record"
+                    }
+                },
+                "uas_id": {
+                    "description": "An unique ID used to associate this track with a specific UAS. The number itself is not relevant, it just needs to be unique per UAS.\n\nIf null, means the system was not able to identify the records present along with this object with any specific UAS.",
+                    "type": "integer",
+                    "format": "uint64",
+                    "minimum": 0.0
+                }
+            }
+        }
     }
-  },
-  "definitions": {
-    "Arc": {
-      "type": "object",
-      "required": [
-        "from",
-        "to"
-      ],
-      "properties": {
-        "from": {
-          "type": "number",
-          "format": "double"
-        },
-        "to": {
-          "type": "number",
-          "format": "double"
-        }
-      }
-    },
-    "Classification": {
-      "type": "string",
-      "enum": [
-        "UAV",
-        "GCS"
-      ]
-    },
-    "Entry": {
-      "type": "object",
-      "required": [
-        "alarm",
-        "classification",
-        "cuas_origin",
-        "identification",
-        "location",
-        "record_number",
-        "system_id",
-        "time",
-        "vendor_id"
-      ],
-      "properties": {
-        "alarm": {
-          "type": "boolean"
-        },
-        "classification": {
-          "$ref": "#/definitions/Classification"
-        },
-        "cuas_origin": {
-          "$ref": "#/definitions/Position3d"
-        },
-        "detection_id": {
-          "type": [
-            "integer",
-            "null"
-          ],
-          "format": "uint64",
-          "minimum": 0.0
-        },
-        "identification": {
-          "type": "string"
-        },
-        "location": {
-          "$ref": "#/definitions/Location"
-        },
-        "record_number": {
-          "type": "integer",
-          "format": "uint64",
-          "minimum": 0.0
-        },
-        "system_id": {
-          "type": "integer",
-          "format": "uint32",
-          "minimum": 0.0
-        },
-        "time": {
-          "type": "string"
-        },
-        "track_id": {
-          "type": [
-            "integer",
-            "null"
-          ],
-          "format": "uint64",
-          "minimum": 0.0
-        },
-        "uas_ident": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "vendor_id": {
-          "type": "integer",
-          "format": "uint32",
-          "minimum": 0.0
-        }
-      }
-    },
-    "Location": {
-      "oneOf": [
-        {
-          "type": "object",
-          "required": [
-            "Arc"
-          ],
-          "properties": {
-            "Arc": {
-              "$ref": "#/definitions/Arc"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": [
-            "Quad"
-          ],
-          "properties": {
-            "Quad": {
-              "$ref": "#/definitions/Quad"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": [
-            "Bearing"
-          ],
-          "properties": {
-            "Bearing": {
-              "type": "number",
-              "format": "double"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": [
-            "Position"
-          ],
-          "properties": {
-            "Position": {
-              "$ref": "#/definitions/Position"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": [
-            "Position3d"
-          ],
-          "properties": {
-            "Position3d": {
-              "$ref": "#/definitions/Position3d"
-            }
-          },
-          "additionalProperties": false
-        }
-      ]
-    },
-    "Position": {
-      "type": "object",
-      "required": [
-        "lat",
-        "lon"
-      ],
-      "properties": {
-        "lat": {
-          "type": "number",
-          "format": "double"
-        },
-        "lon": {
-          "type": "number",
-          "format": "double"
-        }
-      }
-    },
-    "Position3d": {
-      "type": "object",
-      "required": [
-        "height",
-        "lat",
-        "lon"
-      ],
-      "properties": {
-        "height": {
-          "type": "number",
-          "format": "double"
-        },
-        "lat": {
-          "type": "number",
-          "format": "double"
-        },
-        "lon": {
-          "type": "number",
-          "format": "double"
-        }
-      }
-    },
-    "Quad": {
-      "type": "string",
-      "enum": [
-        "North",
-        "East",
-        "South",
-        "West"
-      ]
-    }
-  }
 }

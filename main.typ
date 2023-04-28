@@ -21,23 +21,40 @@ We felt that we required a structured format as opposed to e.g. a table, as data
 
 We chose #link("https://www.json.org/json-en.html", "JSON") due to its simplicity and amount of libraries available for writing and parsing data.
 
-= Notation used
-// ray, ray origin, segment(vec<vec<trackpoint>>), time UTC ONLY, track, detection point, tracking, detection
-- *Ray*: A geometrical half-line, starting at an origin point, and with a given direction extending to infinity.
-- *Track*: An information structure containing position data of an object detected by the radar over time, as well as possibly information about that object.
-- *Track segment*: A list of points belonging to a track that are meant to be visually connected together, because the radar has not lost sight of the object in between them.
-- *Trajectory*: An information structure containing position data of an object detected by the radar over time.
-- *Altitude Mode*: Indicates what an altitude value is relative to: either ground or sea level.
+= Format specification
+The format is specified in a #link("https://json-schema.org/", "JSON Schema"). // TODO: Provide link to json schema
 
+#let url_encode(s) = {
+  let result = ""
+  for char in s {
+    if "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~".contains(char) {
+      result = result + char
+    } else {
+      result = result + (
+        "{": "%7B",
+        "}": "%7D",
+        "\n": "%0A",
+        " ": "%20",
+        "\"": "%22",
+        "/": "%2F",
+        "#": "%23",
+        ",": "%2C",
+        "[": "%5B",
+        "]": "%5D",
+        "(": "%28",
+        ")": "%29",
+        "?": "%3F",
+        "+": "%2B",
+        "\\": "%5C",
+        "^": "%5E",
+        "'": "%27",
+        "$": "%24",
+        ":": "%3A",
+      ).at(char)
+    }
+  }
+  result
+}
 
-= Extensions
-Most elements in the document structure present an `extensions` member. This is a map object meant to allow extending the format if required, by associating new values with an _extension name_.
-
-Extension names have the format `ISSUER_NAME`, where `ISSUER` is the name of the entity introducing the extension (e.g. COURAGEOUS or any other company using the format) and `NAME` is an arbitrary string which may only contain characters as specified by the #link("https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&abb=on&g=&i=", [`XID_Continue`]) unicode set of characters. The value associated with the key is determined by the extension's definition, and can be of any type.
-
-= Document structure
-#include "schema_reader.typ"
-
-= Notes & TODOs
-- The inclusion of rays is not very elegant, their name is not ideal, and they can actually refer to two possible geometric terms of location (Resulting in either a point or a ray)
-- We need to include more data on track points, such as the speed, velocity, quad and bearing of the UAV. All of these should be left as optional.
+// TODO (VERY IMPORTANT): Change URL
+A visualization of the format is available on #link("https://aleokdev.github.io/json-schema-visualizer/?hideEditor&maxLevel=9999&surl=https://raw.githubusercontent.com/aleokdev/json-schema-visualizer/test/courageous.schema.json", "this page").
