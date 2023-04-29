@@ -10,7 +10,8 @@ use schemars::{schema_for, JsonSchema};
 
 #[derive(JsonSchema)]
 pub struct Document {
-    /// The 3D GPS location of the CUAS recorded.
+    /// The 3D GPS location of the CUAS. Can be overriden per Record, but even if overriden this
+    /// value must exist and be a valid position.
     // TODO change docs
     static_cuas_location: Position3d,
     // schema present too, which is where the version/standard is defined
@@ -73,12 +74,12 @@ pub struct Record {
     /// How certainly should the alarm be on, as a value from 0 (Least likely) to 1 (Most likely).
     #[validate(range(min = 0., max = 1.))]
     alarm_certainty: f64,
-    /// The location of the target, which may be given in one of several declaration types.
+    /// The UAS location, which may be given in one of several declaration types.
     location: Location,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
     identification: String,
     /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
-    /// static_cuas_location if included.
+    /// static_cuas_location.
     cuas_location: Option<Position3d>,
 }
 
@@ -91,32 +92,33 @@ pub enum Classification {
 }
 
 #[derive(JsonSchema)]
-/// Location of an object, which may be relative to the CUAS.
+#[serde(tag = "t", content = "c")]
+/// Location of an UAS, which may be relative to the CUAS.
 pub enum Location {
     // clockwise: from -> to (degrees)
-    /// Circular arc relative to the CUAS within which the object resides.
+    /// Circular arc relative to the CUAS within which the UAS resides.
     Arc(Arc),
     /// Compass quadrant where the UAS has been observed.
     Quad(Quad),
     // clockwise from true north (degrees)
     /// Clockwise angle in degrees from true north where the UAS has been observed.
     Bearing(f64),
-    /// Flat 2D position given in Latitude and Longitude.
+    /// Flat 2D position given in latitude and longitude.
     Position2d(Position2d),
-    /// 3D position given in Latitude, Longitude and height.
+    /// 3D position given in latitude, longitude and height.
     Position3d(Position3d),
-    /// Ray where the UAS has been observed, given in bearing and elevation
+    /// Ray where the UAS has been observed given in bearing and elevation.
     BearingElevation {
         /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
-        /// Elevation over the horizon of the UAS relative to the CUAS given in degrees.
+        /// Elevation angle in degrees over the horizon where the UAS has been observed.
         elevation: f64,
     },
     /// 3D position of the UAS given in bearing, elevation angle and distance.
     BearingElevationDistance {
         /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
-        /// Elevation over the horizon of the UAS relative to the CUAS given in degrees.
+        /// Elevation angle in degrees over the horizon where the UAS has been observed.
         elevation: f64,
         /// Distance from the UAS to the CUAS given in meters.
         distance: f64,
@@ -124,7 +126,7 @@ pub enum Location {
 }
 
 #[derive(JsonSchema)]
-/// Circular arc within which the UAS has been observed.   
+/// Describes a circular arc between two clockwise angles from true north.
 pub struct Arc {
     /// Minimum compass angle from the CUAS System to the UAS in degrees.
     from: f64,
@@ -133,7 +135,7 @@ pub struct Arc {
 }
 
 #[derive(JsonSchema)]
-/// Compass quadrant where the UAS has been observed.
+/// Describes a compass quadrant.
 pub enum Quad {
     North,
     East,
@@ -142,22 +144,22 @@ pub enum Quad {
 }
 
 #[derive(JsonSchema)]
-/// Flat 2D position of the UAS given in Latitude and Longitude.
+/// 2D WGS84 position given in latitude and longitude.
 pub struct Position2d {
-    /// GPS latitude of the UAS measured in degrees.
+    /// GPS WGS84 latitude measured in degrees.
     lat: f64,
-    /// GPS longitude of the UAS measured in degrees.
+    /// GPS WGS84 longitude measured in degrees.
     lon: f64,
 }
 
 #[derive(JsonSchema)]
-/// 3D position of the UAS given in Latitude, Longitude and height.
+/// 3D WGS84 position given in latitude, longitude and height.
 pub struct Position3d {
-    /// GPS latitude of the UAS measured in degrees.
+    /// GPS WGS84 latitude measured in degrees.
     lat: f64,
-    /// GPS longitude of the UAS measured in degrees.
+    /// GPS WGS84 longitude measured in degrees.
     lon: f64,
-    /// Height of the UAS measured in meters from sea level.
+    /// Height measured in meters from sea level.
     height: f64,
 }
 
