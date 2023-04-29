@@ -10,7 +10,8 @@ use schemars::{schema_for, JsonSchema};
 
 #[derive(JsonSchema)]
 pub struct Document {
-    /// The 3D GPS location of the CUAS recorded.
+    /// The 3D GPS location of the CUAS. Can be overriden per Record, but even if overriden this
+    /// value must exist and be a valid position.
     // TODO change docs
     static_cuas_location: Position3d,
     // schema present too, which is where the version/standard is defined
@@ -61,7 +62,7 @@ pub struct Record {
     /// https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
     #[schemars(regex(pattern = r"^((?:(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2}(?:\.\d+)?))Z?)$"))]
     time: String,
-    /// An unique number that identifies this record between all other ones present in the document.
+    /// A unique number that identifies this record between all other ones present in the document.
     record_number: u64,
     /// Classification of the record.
     classification: Classification,
@@ -79,7 +80,7 @@ pub struct Record {
     identification: String,
     /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
     /// static_cuas_location.
-    cuas_location: Position3d,
+    cuas_location: Option<Position3d>,
 }
 
 #[derive(JsonSchema)]
@@ -91,26 +92,41 @@ pub enum Classification {
 }
 
 #[derive(JsonSchema)]
+#[serde(tag = "t", content = "c")]
+/// Location of an UAS, which may be relative to the CUAS.
 pub enum Location {
     // clockwise: from -> to (degrees)
+    /// Circular arc relative to the CUAS within which the UAS resides.
     Arc(Arc),
+    /// Compass quadrant where the UAS has been observed.
     Quad(Quad),
     // clockwise from true north (degrees)
+    /// Clockwise angle in degrees from true north where the UAS has been observed.
     Bearing(f64),
+    /// Flat 2D position given in latitude and longitude.
     Position2d(Position2d),
+    /// 3D position given in latitude, longitude and height.
     Position3d(Position3d),
+    /// Ray where the UAS has been observed given in bearing and elevation.
     BearingElevation {
+        /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
+        /// Elevation angle in degrees over the horizon where the UAS has been observed.
         elevation: f64,
     },
+    /// 3D position of the UAS given in bearing, elevation angle and distance.
     BearingElevationDistance {
+        /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
+        /// Elevation angle in degrees over the horizon where the UAS has been observed.
         elevation: f64,
+        /// Distance from the UAS to the CUAS given in meters.
         distance: f64,
     },
 }
 
 #[derive(JsonSchema)]
+/// Describes a circular arc between two clockwise angles from true north.
 pub struct Arc {
     /// Minimum compass angle from the CUAS System to the UAS in degrees.
     from: f64,
@@ -119,29 +135,32 @@ pub struct Arc {
 }
 
 #[derive(JsonSchema)]
-pub struct Position2d {
-    /// GPS latitude of the UAS measured in degrees.
-    lat: f64,
-    /// GPS longitude of the UAS measured in degrees.
-    lon: f64,
-}
-
-#[derive(JsonSchema)]
-pub struct Position3d {
-    /// GPS latitude of the UAS measured in degrees.
-    lat: f64,
-    /// GPS longitude of the UAS measured in degrees.
-    lon: f64,
-    /// Height of the UAS measured in meters from sea level.
-    height: f64,
-}
-
-#[derive(JsonSchema)]
+/// Describes a compass quadrant.
 pub enum Quad {
     North,
     East,
     South,
     West,
+}
+
+#[derive(JsonSchema)]
+/// 2D WGS84 position given in latitude and longitude.
+pub struct Position2d {
+    /// GPS WGS84 latitude measured in degrees.
+    lat: f64,
+    /// GPS WGS84 longitude measured in degrees.
+    lon: f64,
+}
+
+#[derive(JsonSchema)]
+/// 3D WGS84 position given in latitude, longitude and height.
+pub struct Position3d {
+    /// GPS WGS84 latitude measured in degrees.
+    lat: f64,
+    /// GPS WGS84 longitude measured in degrees.
+    lon: f64,
+    /// Height measured in meters from sea level.
+    height: f64,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
