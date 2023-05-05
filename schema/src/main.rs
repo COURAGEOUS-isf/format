@@ -12,15 +12,15 @@ use schemars::{schema_for, JsonSchema};
 pub struct Document {
     /// The 3D GPS location of the CUAS. Can be overriden per Record, but even if overriden this
     /// value must exist and be a valid position.
-    // TODO change docs
     static_cuas_location: Position3d,
     // schema present too, which is where the version/standard is defined
-    /// Detection sets present in the document, mapped by an unique ID.
-    detection: HashMap<u64, Detection>,
-    /// Tracks present in the document, mapped by an unique ID.
-    tracks: HashMap<String, Track>,
+    /// A list containing the detection sets present in the document.
+    detection: Vec<Detection>,
+    /// A list containing the tracks present in the document.
+    tracks: Vec<Track>,
     vendor_name: String,
     system_name: String,
+    // TODO: Add selector between EGM84, EGM96, EGM2008 and EGM2020?
 }
 
 #[derive(JsonSchema)]
@@ -33,7 +33,7 @@ pub struct Detection {
     uas_id: Option<u64>,
     /// A list of records associated with this detection.
     records: Vec<Record>,
-    /// Free-form text.
+    /// Free-form text describing the detection set. Can be, for instance, the name present on the HMI.
     name: Option<String>,
 }
 
@@ -47,7 +47,7 @@ pub struct Track {
     uas_id: u64,
     /// A list of records associated with this track.
     records: Vec<Record>,
-    /// Free-form text.
+    /// Free-form text describing the track. Can be, for instance, the name present on the HMI.
     name: Option<String>,
 }
 
