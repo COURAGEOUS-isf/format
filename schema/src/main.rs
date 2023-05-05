@@ -20,7 +20,6 @@ pub struct Document {
     tracks: Vec<Track>,
     vendor_name: String,
     system_name: String,
-    // TODO: Add selector between EGM84, EGM96, EGM2008 and EGM2020?
 }
 
 #[derive(JsonSchema)]
