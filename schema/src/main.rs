@@ -40,9 +40,6 @@ pub struct Detection {
 pub struct Track {
     /// An unique ID used to associate this track with a specific UAS.
     /// The number itself is not relevant, it just needs to be unique per UAS.
-    ///
-    /// If null, means the system was not able to identify the records present along with this
-    /// object with any specific UAS.
     uas_id: u64,
     /// A list of records associated with this track.
     records: Vec<Record>,
@@ -57,10 +54,8 @@ pub struct Track {
 
 #[derive(JsonSchema)]
 pub struct Record {
-    /// UTC time in the RFC 3339 format for date and time (As described in
-    /// https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
-    #[schemars(regex(pattern = r"^((?:(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2}(?:\.\d+)?))Z?)$"))]
-    time: String,
+    /// UTC time as an Unix millisecond timestamp.
+    time: u64,
     /// A unique number that identifies this record between all other ones present in the document.
     record_number: u64,
     /// Classification of the record.
