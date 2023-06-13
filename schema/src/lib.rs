@@ -76,7 +76,7 @@ pub struct Record {
     pub cuas_location: Option<Position3d>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub enum Classification {
     #[serde(rename = "UAV")]
@@ -85,7 +85,7 @@ pub enum Classification {
     Gcs,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(tag = "t", content = "c")]
 /// Location of an UAS, which may be relative to the CUAS.
@@ -120,7 +120,7 @@ pub enum Location {
     },
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// Describes a circular arc between two clockwise angles from true north.
 pub struct Arc {
@@ -130,7 +130,7 @@ pub struct Arc {
     pub to: f64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// Describes a compass quadrant.
 pub enum Quad {
@@ -140,7 +140,7 @@ pub enum Quad {
     West,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// 2D WGS84 position given in latitude and longitude.
 pub struct Position2d {
@@ -150,7 +150,7 @@ pub struct Position2d {
     pub lon: f64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// 3D WGS84 position given in latitude, longitude and height.
 pub struct Position3d {
