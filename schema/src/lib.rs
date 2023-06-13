@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Document {
     /// The 3D GPS location of the CUAS. Can be overriden per Record, but even if overriden this
@@ -18,7 +18,7 @@ pub struct Document {
     pub system_name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Detection {
     /// An unique ID used to associate this detection with a specific UAS.
@@ -33,7 +33,7 @@ pub struct Detection {
     pub name: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Track {
     /// An unique ID used to associate this track with a specific UAS.
@@ -50,7 +50,7 @@ pub struct Track {
 // TODO fix required *
 // TODO change detection & tracking to arrays
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Record {
     /// UTC time as an Unix millisecond timestamp.
@@ -76,7 +76,7 @@ pub struct Record {
     pub cuas_location: Option<Position3d>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub enum Classification {
     #[serde(rename = "UAV")]
@@ -85,7 +85,7 @@ pub enum Classification {
     Gcs,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(tag = "t", content = "c")]
 /// Location of an UAS, which may be relative to the CUAS.
@@ -120,7 +120,7 @@ pub enum Location {
     },
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// Describes a circular arc between two clockwise angles from true north.
 pub struct Arc {
@@ -130,7 +130,7 @@ pub struct Arc {
     pub to: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// Describes a compass quadrant.
 pub enum Quad {
@@ -140,7 +140,7 @@ pub enum Quad {
     West,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// 2D WGS84 position given in latitude and longitude.
 pub struct Position2d {
@@ -150,7 +150,7 @@ pub struct Position2d {
     pub lon: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 /// 3D WGS84 position given in latitude, longitude and height.
 pub struct Position3d {
