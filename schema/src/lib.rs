@@ -79,10 +79,12 @@ pub struct Record {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub enum Classification {
+    Unknown,
     #[serde(rename = "UAV")]
     Uav,
     #[serde(rename = "GCS")]
     Gcs,
+    Other,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
