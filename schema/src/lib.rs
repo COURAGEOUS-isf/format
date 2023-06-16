@@ -70,7 +70,7 @@ pub struct Record {
     /// The UAS location, which may be given in one of several declaration types.
     pub location: Location,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
-    pub identification: String,
+    pub identification: Option<String>,
     /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
     /// static_cuas_location.
     pub cuas_location: Option<Position3d>,
