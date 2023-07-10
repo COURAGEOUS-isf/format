@@ -3,7 +3,7 @@ use std::{
     io::{BufWriter, Write},
 };
 
-use schema::Document;
+use courageous_format::Document;
 use schemars::schema_for;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

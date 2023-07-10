@@ -1,12 +1,12 @@
 [package]
-name = "schema"
+name = "courageous-format"
 version = "0.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "schema"
+name = "courageous_format"
 
 [[example]]
 name = "schemagen"
