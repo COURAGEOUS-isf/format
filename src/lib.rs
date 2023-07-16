@@ -54,9 +54,10 @@ pub struct Record {
     pub record_number: u64,
     /// Classification of the record.
     pub classification: Classification,
-    /// An Alarm is defined as the function of a CUAS system alerting an Operator via the HMI and
-    /// the generation of associated data in the UAS Activity Log, as a result of Declared UAS
-    /// activity.
+    /// If the record has Alarm data on this record, it may be specified here.
+    ///
+    /// On tracking data, this element SHOULD be present. If a parser finds a null alarm member on a tracking record,
+    /// the behavior is left as implementation-defined.
     pub alarm: Option<Alarm>,
     /// The UAS location, which may be given in one of several declaration types.
     pub location: Location,
@@ -67,6 +68,9 @@ pub struct Record {
     pub cuas_location: Option<Position3d>,
 }
 
+/// An Alarm is defined as the function of a CUAS system alerting an Operator via the HMI and
+/// the generation of associated data in the UAS Activity Log, as a result of Declared UAS
+/// activity.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Alarm {
