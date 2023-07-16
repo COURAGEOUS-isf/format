@@ -21,7 +21,7 @@ pub struct Document {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Detection {
-    /// An unique ID used to associate this detection with a specific UAS.
+    /// A unique ID used to associate this detection with a specific UAS.
     /// The number itself is not relevant, it just needs to be unique per UAS.
     ///
     /// If null, means the system was not able to identify the records present along with this
@@ -36,7 +36,7 @@ pub struct Detection {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Track {
-    /// An unique ID used to associate this track with a specific UAS.
+    /// A unique ID used to associate this track with a specific UAS.
     /// The number itself is not relevant, it just needs to be unique per UAS.
     pub uas_id: u64,
     /// A list of records associated with this track.
@@ -44,11 +44,6 @@ pub struct Track {
     /// Free-form text describing the track. Can be, for instance, the name present on the HMI.
     pub name: Option<String>,
 }
-
-// for the company: schema + documentation
-// TODO better docs
-// TODO fix required *
-// TODO change detection & tracking to arrays
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
@@ -59,14 +54,11 @@ pub struct Record {
     pub record_number: u64,
     /// Classification of the record.
     pub classification: Classification,
-    /// Whether the alarm function of the CUAS system is active or not.
-    /// An Alarm is defined as the function of a CUAS system alerting an Operator via the HMI and
-    /// the generation of associated data in the UAS Activity Log, as a result of Declared UAS
-    /// activity.
-    pub alarm: bool,
-    /// How certainly should the alarm be on, as a value from 0 (Least likely) to 1 (Most likely).
-    #[cfg_attr(feature = "schemars", validate(range(min = 0., max = 1.)))]
-    pub alarm_certainty: f64,
+    /// If the record has Alarm data on this record, it may be specified here.
+    ///
+    /// On tracking data, this element SHOULD be present. If a parser finds a null alarm member on a tracking record,
+    /// the behavior is left as implementation-defined.
+    pub alarm: Option<Alarm>,
     /// The UAS location, which may be given in one of several declaration types.
     pub location: Location,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
@@ -74,6 +66,19 @@ pub struct Record {
     /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
     /// static_cuas_location.
     pub cuas_location: Option<Position3d>,
+}
+
+/// An Alarm is defined as the function of a CUAS system alerting an Operator via the HMI and
+/// the generation of associated data in the UAS Activity Log, as a result of Declared UAS
+/// activity.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+pub struct Alarm {
+    /// Whether the alarm function of the CUAS system is active or not.
+    pub active: bool,
+    /// How certain is the system of an active alarm, as a value from 0 (Least likely) to 1 (Most likely).
+    #[cfg_attr(feature = "schemars", validate(range(min = 0., max = 1.)))]
+    pub alarm_certainty: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
@@ -91,6 +96,8 @@ pub enum Classification {
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(tag = "t", content = "c")]
 /// Location of an UAS, which may be relative to the CUAS.
+#[schemars(description = "Location of an UAS, which may be relative to the CUAS.
+Location objects are composed of a tag 't' which indicates the variant and a contents element 'c' which contains the variant's data.")]
 pub enum Location {
     // clockwise: from -> to (degrees)
     /// Circular arc relative to the CUAS within which the UAS resides.
@@ -161,5 +168,5 @@ pub struct Position3d {
     /// GPS WGS84 longitude measured in degrees.
     pub lon: f64,
     /// Height measured in meters from sea level.
-    pub height: f64,
+    pub height_amsl: f64,
 }
