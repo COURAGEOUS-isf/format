@@ -1,7 +1,30 @@
+use std::fmt::Display;
+
+use schemars::schema::{InstanceType, SchemaObject};
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+pub struct Version;
+
+#[cfg(feature = "schemars")]
+impl JsonSchema for Version {
+    fn schema_name() -> String {
+        "Version".to_owned()
+    }
+
+    fn json_schema(_gen: &mut schemars::gen::SchemaGenerator) -> schemars::schema::Schema {
+        SchemaObject {
+            enum_values: Some(vec![schemars::_serde_json::Value::String(
+                env!("CARGO_PKG_VERSION").to_owned(),
+            )]),
+            ..Default::default()
+        }
+        .into()
+    }
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
@@ -16,6 +39,7 @@ pub struct Document {
     pub tracks: Vec<Track>,
     pub vendor_name: String,
     pub system_name: String,
+    pub version: Version,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
