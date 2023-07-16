@@ -59,7 +59,6 @@ pub struct Record {
     /// activity.
     pub alarm: Option<Alarm>,
     /// The UAS location, which may be given in one of several declaration types.
-    /// Location types are composed of a tag 't' and a contents element 'c'.
     pub location: Location,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
     pub identification: Option<String>,
@@ -93,6 +92,8 @@ pub enum Classification {
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(tag = "t", content = "c")]
 /// Location of an UAS, which may be relative to the CUAS.
+#[schemars(description = "Location of an UAS, which may be relative to the CUAS.
+Location objects are composed of a tag 't' which indicates the variant and a contents element 'c' which contains the variant's data.")]
 pub enum Location {
     // clockwise: from -> to (degrees)
     /// Circular arc relative to the CUAS within which the UAS resides.
