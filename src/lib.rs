@@ -3,15 +3,6 @@ use serde::{Deserialize, Serialize};
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 
-// for the company: schema + documentation
-// TODO better docs
-// TODO fix required *
-// TODO change detection & tracking to arrays
-// TODO solve classification enum variants not showing up in visualizer
-// TODO add location variant names above structure in visualizer (Rather than "(?)")
-// TODO solve static_cuas_location description not showing up
-// TODO solve location variants descriptions issue
-
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Document {
@@ -30,7 +21,6 @@ pub struct Document {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Detection {
-    /// (Optional)
     /// A unique ID used to associate this detection with a specific UAS.
     /// The number itself is not relevant, it just needs to be unique per UAS.
     ///
@@ -39,7 +29,7 @@ pub struct Detection {
     pub uas_id: Option<u64>,
     /// A list of records associated with this detection.
     pub records: Vec<Record>,
-    /// (Optional) Free-form text describing the detection set. Can be, for instance, the name present on the HMI.
+    /// Free-form text describing the detection set. Can be, for instance, the name present on the HMI.
     pub name: Option<String>,
 }
 
@@ -51,7 +41,7 @@ pub struct Track {
     pub uas_id: u64,
     /// A list of records associated with this track.
     pub records: Vec<Record>,
-    /// (Optional) Free-form text describing the track. Can be, for instance, the name present on the HMI.
+    /// Free-form text describing the track. Can be, for instance, the name present on the HMI.
     pub name: Option<String>,
 }
 
@@ -64,7 +54,6 @@ pub struct Record {
     pub record_number: u64,
     /// Classification of the record.
     pub classification: Classification,
-    /// (Optional)
     /// An Alarm is defined as the function of a CUAS system alerting an Operator via the HMI and
     /// the generation of associated data in the UAS Activity Log, as a result of Declared UAS
     /// activity.
@@ -72,9 +61,9 @@ pub struct Record {
     /// The UAS location, which may be given in one of several declaration types.
     /// Location types are composed of a tag 't' and a contents element 'c'.
     pub location: Location,
-    /// (Optional) Free form text, possibly describing the model or configuration of the UAS identified.
+    /// Free form text, possibly describing the model or configuration of the UAS identified.
     pub identification: Option<String>,
-    /// (Optional) The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
+    /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
     /// static_cuas_location.
     pub cuas_location: Option<Position3d>,
 }
@@ -105,8 +94,6 @@ pub enum Classification {
 #[serde(tag = "t", content = "c")]
 /// Location of an UAS, which may be relative to the CUAS.
 pub enum Location {
-    // All this variant descriptions are overwritten by the doc comments of their respective types
-
     // clockwise: from -> to (degrees)
     /// Circular arc relative to the CUAS within which the UAS resides.
     Arc(Arc),
