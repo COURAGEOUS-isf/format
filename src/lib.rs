@@ -193,5 +193,6 @@ pub struct Position3d {
     /// GPS WGS84 longitude measured in degrees.
     pub lon: f64,
     /// Height measured in meters from sea level.
-    pub height_amsl: f64,
+    #[cfg_attr(feature = "schemars", serde(rename = "height_amsl"))]
+    pub height: f64,
 }
