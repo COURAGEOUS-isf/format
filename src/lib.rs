@@ -1,4 +1,3 @@
-use schemars::schema::SchemaObject;
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "schemars")]
@@ -14,7 +13,8 @@ impl JsonSchema for Version {
     }
 
     fn json_schema(_gen: &mut schemars::gen::SchemaGenerator) -> schemars::schema::Schema {
-        SchemaObject {
+        schemars::schema::SchemaObject {
+            instance_type: Some(schemars::schema::InstanceType::String.into()),
             enum_values: Some(vec![schemars::_serde_json::Value::String(
                 env!("CARGO_PKG_VERSION").to_owned(),
             )]),
