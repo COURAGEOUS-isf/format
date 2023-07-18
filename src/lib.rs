@@ -5,7 +5,13 @@ use serde::{Deserialize, Serialize};
 use schemars::JsonSchema;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct Version(String);
+pub struct Version(pub String);
+
+impl Version {
+    pub fn current() -> Self {
+        Version(env!("CARGO_PKG_VERSION").to_owned())
+    }
+}
 
 #[cfg(feature = "schemars")]
 impl JsonSchema for Version {
@@ -16,7 +22,7 @@ impl JsonSchema for Version {
     fn json_schema(_gen: &mut schemars::gen::SchemaGenerator) -> schemars::schema::Schema {
         SchemaObject {
             enum_values: Some(vec![schemars::_serde_json::Value::String(
-                env!("CARGO_PKG_VERSION").to_owned(),
+                Version::current().0,
             )]),
             ..Default::default()
         }
