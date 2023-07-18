@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use schemars::JsonSchema;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct Version;
+pub struct Version(String);
 
 #[cfg(feature = "schemars")]
 impl JsonSchema for Version {
