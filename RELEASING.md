@@ -1,5 +1,5 @@
 # Steps to take to release a new format version
-1. Change the version on the `Cargo.toml` file, adhering to semver semantics.
+1. Change the version on the `Cargo.toml` file, adhering to semver semantics:
 
     The **library version**, i.e. the part before the plus in the package version, must change every time a new release is done.
     Changes are considered breaking if they break the crate's public API (i.e. Packages using the previous version may not compile successfully with the new release).
