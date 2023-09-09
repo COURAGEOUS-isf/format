@@ -89,7 +89,7 @@ pub struct Record {
     pub alarm: Option<Alarm>,
     /// The UAS location, which may be given in one of several declaration types.
     pub location: Location,
-    /// The UAS velocity given in ENU coordinates (relative to the UAS position and given in meters per second).
+    /// The UAS velocity given in ENU coordinates (given from the UAS position and given in meters per second).
     pub velocity: Option<CoordENU>,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
     pub identification: Option<String>,
