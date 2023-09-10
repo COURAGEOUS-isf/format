@@ -9,7 +9,13 @@ pub struct Version(pub String);
 
 impl Version {
     pub fn current() -> Self {
-        Version(env!("CARGO_PKG_VERSION").to_owned())
+        let pkg_version = env!("CARGO_PKG_VERSION");
+        let schema_version = pkg_version
+            .split_once("+schema.")
+            .map_or(pkg_version, |(_crate_version, schema_version)| {
+                schema_version
+            });
+        Version(schema_version.to_owned())
     }
 }
 
