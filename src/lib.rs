@@ -89,6 +89,9 @@ pub struct Record {
     pub alarm: Option<Alarm>,
     /// The UAS location, which may be given in one of several declaration types.
     pub location: Location,
+    /// The UAS velocity given in ENU coordinates (given from the UAS position and given in meters per second).
+    #[serde(default)]
+    pub velocity: Option<CoordENU>,
     /// Free form text, possibly describing the model or configuration of the UAS identified.
     pub identification: Option<String>,
     /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
@@ -118,6 +121,18 @@ pub enum Classification {
     #[serde(rename = "GCS")]
     Gcs,
     Other,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+/// Local cartesian coordinates given in East, North and Up using WGS84.
+pub struct CoordENU {
+    /// Component tangent to the parallels. (Positive = east, negative = west)
+    pub east: f64,
+    /// Component to meridians. (Positive = north, negative = south)
+    pub north: f64,
+    /// Component perpendicular to the WGS84 ellipsoid. (Positive = up, negative = down)
+    pub up: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]

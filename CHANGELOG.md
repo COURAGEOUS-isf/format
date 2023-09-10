@@ -1,3 +1,6 @@
+# 0.3.2+schema.0.3.1
+- Added optional velocity member
+
 # 0.3.1+schema.0.3.0
 - Fix `height_amsl` serde, which was being parsed as `height` if the `schemars` feature was not enabled
 
