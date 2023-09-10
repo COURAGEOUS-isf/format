@@ -42,7 +42,7 @@ cargo run --example schemagen --features schemars
 
 5. Create a new annotated tag with the name set to the new version preceded by a `v`, e.g. `v0.3.1+schema.0.3.0`.
 6. IF the schema version changes, an update to `track2kml` is required to support it. Follow these steps:
-    1. On the `track2kml` repository, change `dependencies.courageous-format.tag` to the new package version of this repository.
+    1. On the `track2kml` repository, change `dependencies.courageous-format.tag` for both `cli` and the root package to the new package version of this repository.
     2. Update `track2kml` accordingly to support the new changes. Remember to change the format version present in `cli/main.rs` if required.
     3. Update the `track2kml` package version using the same criteria as used for the library version here.
     4. Make sure the `CHANGELOG.md` file is up to date and add the changes belonging to this release below a level 2 markdown heading.
