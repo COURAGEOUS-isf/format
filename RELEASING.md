@@ -33,10 +33,15 @@
 
 2. Make sure the `CHANGELOG.md` file is up to date and add the changes belonging to this release below a level 2 markdown heading.
 
-3. Create and push a new commit. The commit message does not need to follow any standard.
+3. Run the following command in order to update the schema.
+```sh
+cargo run --example schemagen --features schemars
+```
 
-4. Create a new annotated tag with the name set to the new version preceded by a `v`, e.g. `v0.3.1+schema.0.3.0`.
-5. IF the schema version changes, an update to `track2kml` is required to support it. Follow these steps:
+4. Create and push a new commit. The commit message does not need to follow any standard.
+
+5. Create a new annotated tag with the name set to the new version preceded by a `v`, e.g. `v0.3.1+schema.0.3.0`.
+6. IF the schema version changes, an update to `track2kml` is required to support it. Follow these steps:
     1. On the `track2kml` repository, change `dependencies.courageous-format.tag` to the new package version of this repository.
     2. Update `track2kml` accordingly to support the new changes. Remember to change the format version present in `cli/main.rs` if required.
     3. Update the `track2kml` package version using the same criteria as used for the library version here.
@@ -45,14 +50,10 @@
     6. Update the private `track2kml-ext` repository: Change `dependencies.courageous-format.tag`, fix internal errors.
     7. Create and push a new commit on the `track2kml-ext` repository.
 
-6. IF AND ONLY IF the schema version changes, an update to the format page is required. Follow these steps:
-    1. Run
-    ```sh
-    cargo run --example schemagen --features schemars
-    ```
-    2. Copy the resulting schema file (in the CWD, named `courageous.schema.json`) to the [page repository's](https://github.com/COURAGEOUS-isf/format-website) `/schemas/` folder.
-    3. Rename it to `v{version}.json`, where `{version}` is the schema version (i.e. build metadata of this repository's package)
-    4. Create a file of the same name, just with the `html` extension inside `/schemas/changelogs/` using the format found on the other files. Copy the changes you wrote on the `CHANGELOG.md` file of this repository.
-    5. If `track2kml` has been updated too, compile a release from the `track2kml-ext` repository using the `generate_release.sh` script. Repeat steps 2 to 4 except using the resulting `release/COURAGEOUS-version.zip` file, using the `.zip` extension and using the `track2kml` folder instead of `schemas`.
+7. IF AND ONLY IF the schema version changes, an update to the format page is required. Follow these steps:
+    1. Copy the current schema file (in the project directory, named `courageous.schema.json`) to the [page repository's](https://github.com/COURAGEOUS-isf/format-website) `/schemas/` folder.
+    2. Rename it to `v{version}.json`, where `{version}` is the schema version (i.e. build metadata of this repository's package)
+    3. Create a file of the same name, just with the `html` extension inside `/schemas/changelogs/` using the format found on the other files. Copy the changes you wrote on the `CHANGELOG.md` file of this repository.
+    4. If `track2kml` has been updated too, compile a release from the `track2kml-ext` repository using the `generate_release.sh` script. Repeat steps 2 to 4 except using the resulting `release/COURAGEOUS-version.zip` file, using the `.zip` extension and using the `track2kml` folder instead of `schemas`.
     5. Commit and push on the page repository.
     6. Send a zip of the page to imaza at us dot es to update the page.
