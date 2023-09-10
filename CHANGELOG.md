@@ -1,4 +1,4 @@
-# 0.3.2+schema.0.3.1
+# 0.4.0+schema.0.3.1
 - Added optional velocity member
 
 # 0.3.1+schema.0.3.0
