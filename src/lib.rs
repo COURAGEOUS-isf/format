@@ -219,7 +219,7 @@ pub struct Position3d {
     pub lat: f64,
     /// GPS WGS84 longitude measured in degrees.
     pub lon: f64,
-    /// Height measured in meters from sea level.
+    /// Height measured in meters from sea level (geoid).
     #[serde(rename = "height_amsl")]
     pub height: f64,
 }
