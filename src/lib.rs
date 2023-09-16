@@ -213,13 +213,13 @@ pub struct Position2d {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-/// 3D WGS84 position given in latitude, longitude and height.
+/// 3D (WGS84 horizontal datum EGM96 vertical datum) position given in latitude, longitude and height.
 pub struct Position3d {
     /// GPS WGS84 latitude measured in degrees.
     pub lat: f64,
     /// GPS WGS84 longitude measured in degrees.
     pub lon: f64,
-    /// Height measured in meters from sea level (geoid).
+    /// Height measured in meters from mean sea level (EGM96).
     #[serde(rename = "height_amsl")]
     pub height: f64,
 }
