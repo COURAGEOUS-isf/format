@@ -44,8 +44,14 @@ pub struct Document {
     pub static_cuas_location: Position3d,
     // schema present too, which is where the version/standard is defined
     /// A list containing the detection sets present in the document.
+    ///
+    /// Detection sets should be used when the CUAS is surveying the perimeter for targets to detect.
+    /// Their records are treated as independent entities.
     pub detection: Vec<Detection>,
     /// A list containing the tracks present in the document.
+    ///
+    /// Tracks should be used when the CUAS has locked on a target and is actively tracking its position.
+    /// Their records describe the trajectory of a specific target.
     pub tracks: Vec<Track>,
     pub vendor_name: String,
     pub system_name: String,
@@ -102,6 +108,8 @@ pub struct Record {
     pub identification: Option<String>,
     /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
     /// static_cuas_location.
+    ///
+    /// If the CUAS is located at the static_cuas_location on this instant, you may skip this field.
     pub cuas_location: Option<Position3d>,
 }
 
@@ -213,13 +221,13 @@ pub struct Position2d {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-/// 3D WGS84 position given in latitude, longitude and height.
+/// 3D (WGS84 horizontal datum EGM96 vertical datum) position given in latitude, longitude and height.
 pub struct Position3d {
     /// GPS WGS84 latitude measured in degrees.
     pub lat: f64,
     /// GPS WGS84 longitude measured in degrees.
     pub lon: f64,
-    /// Height measured in meters from sea level.
+    /// Height measured in meters from mean sea level (EGM96).
     #[serde(rename = "height_amsl")]
     pub height: f64,
 }
