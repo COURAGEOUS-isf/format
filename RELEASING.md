@@ -54,6 +54,7 @@ cargo run --example schemagen --features schemars
     1. Copy the current schema file (in the project directory, named `courageous.schema.json`) to the [page repository's](https://github.com/COURAGEOUS-isf/format-website) `/schemas/` folder.
     2. Rename it to `v{version}.json`, where `{version}` is the schema version (i.e. build metadata of this repository's package)
     3. Create a file of the same name, just with the `html` extension inside `/schemas/changelogs/` using the format found on the other files. Copy the changes you wrote on the `CHANGELOG.md` file of this repository.
-    4. If `track2kml` has been updated too, compile a release from the `track2kml-ext` repository using the `generate_release.sh` script. Repeat steps 2 to 4 except using the resulting `release/COURAGEOUS-version.zip` file, using the `.zip` extension and using the `track2kml` folder instead of `schemas`.
-    5. Commit and push on the page repository.
-    6. Send a zip of the page to imaza at us dot es to update the page.
+    4. Update `list.json` to include the new version file.
+    5. If `track2kml` has been updated too, compile a release from the `track2kml-ext` repository using the `generate_release.sh` script. Repeat steps 1 to 4 except using the resulting `release/COURAGEOUS-version.zip` file, using the `.zip` extension and copying to the `track2kml` folder instead of `schemas`.
+    6. Commit and push on the page repository.
+    7. Send a zip of the page to imaza at us dot es to update the page.
