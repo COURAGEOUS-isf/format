@@ -1,6 +1,6 @@
 # 0.4.1+schema.0.3.2
 - Update and clarify documentation
-- Specify that height is respect to the EGM96 geoid
+- Specify that height is respect to the EGM96 geoid. This was previously assumed; The wording used in the documentation has changed to clarify this further.
 
 # 0.4.0+schema.0.3.1
 - Added optional velocity member
