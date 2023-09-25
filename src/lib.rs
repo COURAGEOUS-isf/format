@@ -67,9 +67,9 @@ pub struct Detection {
     /// If null, means the system was not able to identify the records present along with this
     /// object with any specific UAS.
     pub uas_id: Option<u64>,
-    /// If this detection set refers to a UAV and if applicable, this member refers to the "home location" set on the
-    /// UAV settings. This information can be available for C-UAS systems that listen to the data link protocol between
-    /// the UAV and its GCS.
+    /// If this detection set refers to a specific UAV (i.e. the uas_id member is set) and if applicable, this member
+    /// refers to the "home location" set on the UAV settings. This information can be available for C-UAS systems that
+    /// listen to the data link protocol between the UAV and its GCS.
     pub uav_home_location: Option<Position3d>,
     /// A list of records associated with this detection.
     pub records: Vec<Record>,
