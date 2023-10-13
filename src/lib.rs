@@ -93,8 +93,8 @@ pub struct Track {
     pub name: Option<String>,
 }
 
-/// A detection data record. Its main difference with tracking data records is the optionality of the `alarm` and
-/// `location` members.
+/// A detection data record. Its main difference with tracking data records is the `alarm` and
+/// `location` members being optional.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct DetectionRecord {
