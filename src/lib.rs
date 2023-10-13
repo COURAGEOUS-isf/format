@@ -72,7 +72,7 @@ pub struct Detection {
     /// listen to the data link protocol between the UAV and its GCS.
     pub uav_home_location: Option<Position3d>,
     /// A list of records associated with this detection.
-    pub records: Vec<Record>,
+    pub records: Vec<DetectionRecord>,
     /// Free-form text describing the detection set. Can be, for instance, the name present on the HMI.
     pub name: Option<String>,
 }
@@ -88,14 +88,16 @@ pub struct Track {
     /// the UAV and its GCS.
     pub uav_home_location: Option<Position3d>,
     /// A list of records associated with this track.
-    pub records: Vec<Record>,
+    pub records: Vec<TrackingRecord>,
     /// Free-form text describing the track. Can be, for instance, the name present on the HMI.
     pub name: Option<String>,
 }
 
+/// A detection data record. Its main difference with tracking data records is the optionality of the `alarm` and
+/// `location` members.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-pub struct Record {
+pub struct DetectionRecord {
     /// UTC time as an Unix millisecond timestamp.
     pub time: u64,
     /// A unique number that identifies this record between all other ones present in the document.
@@ -103,10 +105,36 @@ pub struct Record {
     /// Classification of the record.
     pub classification: Classification,
     /// If the record has Alarm data on this record, it may be specified here.
-    ///
-    /// On tracking data, this element SHOULD be present. If a parser finds a null alarm member on a tracking record,
-    /// the behavior is left as implementation-defined.
     pub alarm: Option<Alarm>,
+    /// The UAS location, which may be given in one of several declaration types.
+    ///
+    /// On detection sets, this member may also be excluded if the position of the UAS is not known.
+    pub location: Option<Location>,
+    /// The UAS velocity given in ENU coordinates (given from the UAS position and given in meters per second).
+    #[serde(default)]
+    pub velocity: Option<CoordENU>,
+    /// Free form text, possibly describing the model or configuration of the UAS identified.
+    pub identification: Option<String>,
+    /// The 3D GPS location of the CUAS recorded on this instant. Overrides the document's
+    /// static_cuas_location.
+    ///
+    /// If the CUAS is located at the static_cuas_location on this instant, you may skip this field.
+    pub cuas_location: Option<Position3d>,
+}
+
+/// A tracking data record. Its main difference with detection data records is the requirement of the `alarm` and
+/// `location` members.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
+pub struct TrackingRecord {
+    /// UTC time as an Unix millisecond timestamp.
+    pub time: u64,
+    /// A unique number that identifies this record between all other ones present in the document.
+    pub record_number: u64,
+    /// Classification of the record.
+    pub classification: Classification,
+    /// Alarm data associated with this record.
+    pub alarm: Alarm,
     /// The UAS location, which may be given in one of several declaration types.
     pub location: Location,
     /// The UAS velocity given in ENU coordinates (given from the UAS position and given in meters per second).
@@ -131,7 +159,7 @@ pub struct Alarm {
     pub active: bool,
     /// How certain is the system of an active alarm, as a value from 0 (Least likely) to 1 (Most likely).
     #[cfg_attr(feature = "schemars", validate(range(min = 0., max = 1.)))]
-    pub alarm_certainty: f64,
+    pub certainty: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
@@ -159,27 +187,32 @@ pub struct CoordENU {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
-#[serde(tag = "t", content = "c")]
 /// Location of an UAS, which may be relative to the CUAS.
 #[cfg_attr(
     feature = "schemars",
     schemars(description = "Location of an UAS, which may be relative to the CUAS.
-Location objects are composed of a tag 't' which indicates the variant and a contents element 'c' which contains the variant's data.")
+Location objects are composed of a single key which indicates the variant being used and a content element associated with it which contains the variant's data.")
 )]
 pub enum Location {
     // clockwise: from -> to (degrees)
     /// Circular arc relative to the CUAS within which the UAS resides.
+    #[serde(rename = "arc")]
     Arc(Arc),
     /// Compass quadrant where the UAS has been observed.
+    #[serde(rename = "quad")]
     Quad(Quad),
     // clockwise from true north (degrees)
     /// Clockwise angle in degrees from true north where the UAS has been observed.
+    #[serde(rename = "bearing")]
     Bearing(f64),
     /// Flat 2D position given in latitude and longitude.
+    #[serde(rename = "position2d")]
     Position2d(Position2d),
     /// 3D position given in latitude, longitude and height.
+    #[serde(rename = "position3d")]
     Position3d(Position3d),
     /// Ray where the UAS has been observed given in bearing and elevation.
+    #[serde(rename = "bearing_ele")]
     BearingElevation {
         /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
@@ -187,6 +220,7 @@ pub enum Location {
         elevation: f64,
     },
     /// 3D position of the UAS given in bearing, elevation angle and distance.
+    #[serde(rename = "bearing_ele_dist")]
     BearingElevationDistance {
         /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
