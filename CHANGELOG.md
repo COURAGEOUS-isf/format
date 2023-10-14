@@ -1,4 +1,4 @@
-# 0.6.1+schema.0.4.0
+# 0.6.0+schema.0.4.0
 - Separate detection and tracking records as different types, for more flexibility on what either can contain.
 - Enforce the `alarm` member on tracking records. Leaving it as null on tracking records previously resulted in implementation defined behavior; This is no longer the case.
 - Make the `location` member optional on detection records, as some C-UAS systems may sometimes detect UAS systems and some of their details but not know their exact location.
