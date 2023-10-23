@@ -32,5 +32,5 @@ jobs:
         # Changelog fileName
         fileName: CHANGELOG.md
         # Label to ignore changelog check
-        noChangelogLabel: "[no changelog]"
+        noChangelogLabel: "no changelog"
         checkNotification: Simple
