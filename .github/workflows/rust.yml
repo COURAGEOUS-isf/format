@@ -26,6 +26,8 @@ jobs:
     steps:
     - name: Changelog checker
       uses: Zomzog/changelog-checker@v1.3.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         # Changelog fileName
         fileName: CHANGELOG.md
