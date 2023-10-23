@@ -187,6 +187,7 @@ pub struct CoordENU {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Copy)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
+#[serde(tag = "$type")]
 /// Location of an UAS, which may be relative to the CUAS.
 #[cfg_attr(
     feature = "schemars",
@@ -196,23 +197,17 @@ Location objects are composed of a single key which indicates the variant being 
 pub enum Location {
     // clockwise: from -> to (degrees)
     /// Circular arc relative to the CUAS within which the UAS resides.
-    #[serde(rename = "arc")]
     Arc(Arc),
     /// Compass quadrant where the UAS has been observed.
-    #[serde(rename = "quad")]
-    Quad(Quad),
+    Quad { quad: Quad },
     // clockwise from true north (degrees)
     /// Clockwise angle in degrees from true north where the UAS has been observed.
-    #[serde(rename = "bearing")]
-    Bearing(f64),
+    Bearing { bearing: f64 },
     /// Flat 2D position given in latitude and longitude.
-    #[serde(rename = "position2d")]
     Position2d(Position2d),
     /// 3D position given in latitude, longitude and height.
-    #[serde(rename = "position3d")]
     Position3d(Position3d),
     /// Ray where the UAS has been observed given in bearing and elevation.
-    #[serde(rename = "bearing_ele")]
     BearingElevation {
         /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
@@ -220,7 +215,6 @@ pub enum Location {
         elevation: f64,
     },
     /// 3D position of the UAS given in bearing, elevation angle and distance.
-    #[serde(rename = "bearing_ele_dist")]
     BearingElevationDistance {
         /// Clockwise angle in degrees from true north where the UAS has been observed.
         bearing: f64,
