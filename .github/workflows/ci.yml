@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check
+      run: cargo check --all --all-features --verbose
+    - name: Check formatting
+      run: cargo fmt --all -- --check
+      
+  check-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Changelog checker
+      uses: Zomzog/changelog-checker@v1.3.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        # Changelog fileName
+        fileName: CHANGELOG.md
+        # Label to ignore changelog check
+        noChangelogLabel: "no changelog"
+        checkNotification: Simple
