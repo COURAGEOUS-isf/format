@@ -2,8 +2,8 @@
 The format uses different structures to organize and distinguish data.
 
 ### Records
-**Records** represent all the information related with an entity in a given time and point in space.
-Each record must have a unique `record_number`.
+**Records** represent all the information related with an entity in a given time
+and, when applicable, point in space.
 
 ### Record sets
 **Record sets** are clusters of records under a unique `uas_id` and `name`.

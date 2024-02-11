@@ -5,8 +5,8 @@ a guide<ins>**.
 
 The main procedure should be to:
 - Log data either in detection or tracks depending on the nature of the data.
-- Organize and distinguish elements through record fields
-- Classify and identify objects
+- Organize and distinguish elements through record fields.
+- Classify and identify objects.
 - Fill in all fields that the system allows. 
 Leaving optional fields blank means the system is incapable 
 of obtaining such information.
