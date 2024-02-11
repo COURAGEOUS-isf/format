@@ -8,4 +8,6 @@ providing the C-UAS position.
 system. This field is **compulsory for all C-UAS**, but mobile
 systems can rely on the `cuas_location` field inside all records for 
 a dynamic position that will override the value given on `static_cuas_location`.
+In such cases, `static_cuas_location` should include the first C-UAS 
+position recorded.
 
