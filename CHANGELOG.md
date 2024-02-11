@@ -1,3 +1,6 @@
+# 0.6.2+schema.0.4.1
+- Created format document guide
+
 # 0.6.1+schema.0.4.1
 - Tweak document `detection` documentation to avoid confusion
 
