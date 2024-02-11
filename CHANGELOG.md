@@ -1,3 +1,6 @@
+# 0.6.1+schema.0.4.1
+- Tweak document `detection` documentation to avoid confusion
+
 # 0.6.0+schema.0.4.0
 - Rename `location` tag member from `t` to `$type`, which is a bit more explicit on its meaning.
 - Use [internally tagged enum representation](https://serde.rs/enum-representations.html) for `location` members, which effectively gets rid of the `c` member, flattening its contents into the parent structure.

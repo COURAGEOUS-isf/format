@@ -46,7 +46,6 @@ pub struct Document {
     /// A list containing the detection sets present in the document.
     ///
     /// Detection sets should be used when the CUAS is surveying the perimeter for targets to detect.
-    /// Their records are treated as independent entities.
     pub detection: Vec<Detection>,
     /// A list containing the tracks present in the document.
     ///
