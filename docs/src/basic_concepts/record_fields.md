@@ -1,6 +1,6 @@
 ## Record organization
 The format uses various fields to organize and distinguish **records**
-and **record sets** [^1]:
+and **record sets**[^1]:
 `name`, `uas_id` and `record_number`.
 
 ### Records
@@ -28,5 +28,4 @@ It is **essential** for **C-UAS that intercept the UAS communication** to view t
 [Intercepting C-UAS segment](../common_uses/intercepting.md) to understand the
 UAV - GCS logging procedure. 
 
-----
-[^1] Record sets refers to both track and detection set elements (inside `detection` and `tracks`).
+[^1]: Record sets refers to both track and detection set elements (inside `detection` and `tracks`).
