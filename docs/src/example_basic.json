@@ -1,0 +1,115 @@
+{
+    "detection": [
+        {
+            "records": [
+                {
+                    "alarm": {
+                        "active": true,
+                        "certainty": 1
+                    },
+                    "classification": "Unknown",
+                    "location": {
+                        "$type": "BearingElevation",
+                        "bearing": 43.563024999999996,
+                        "elevation": 2.211875
+                    },
+                    "record_number": 4,
+                    "time": 1696255068480
+                },
+                {
+                    "alarm": {
+                        "active": true,
+                        "certainty": 1
+                    },
+                    "classification": "Unknown",
+                    "location": {
+                        "$type": "BearingElevation",
+                        "bearing": 42.719274999999996,
+                        "elevation": 2.336875
+                    },
+                    "record_number": 5,
+                    "time": 1696255069035
+                }
+            ]
+        }
+    ],
+    "static_cuas_location": {
+        "height_amsl": 11.4,
+        "lat": 51.156888,
+        "lon": 2.738243
+    },
+    "system_name": "CUAS system name",
+    "tracks": [
+        {
+            "name": "Track name",
+            "records": [
+                {
+                    "classification": "UAV",
+                    "identification": "UAV description",
+                    "alarm": {
+                        "active": false,
+                        "certainty": 0.55
+                    },
+                    "location": {
+                        "$type": "Position3d",
+                        "height_amsl": 47.15314324164956,
+                        "lat": 51.158929232973726,
+                        "lon": 2.7414165702140973
+                    },
+                    "record_number": 0,
+                    "time": 1696421411207,
+                    "velocity": {
+                        "east": -2.14297,
+                        "north": 1.69235,
+                        "up": -0.86349
+                    }
+                },
+                {
+                    "classification": "UAV",
+                    "identification": "UAV Description",
+                    "alarm": {
+                        "active": true,
+                        "certainty": 0.70
+                    },
+                    "location": {
+                        "$type": "Position3d",
+                        "height_amsl": 48.20321620520593,
+                        "lat": 51.158403612017516,
+                        "lon": 2.7383094375955803
+                    },
+                    "record_number": 1,
+                    "time": 1696421518341,
+                    "velocity": {
+                        "east": -2.14297,
+                        "north": 1.69235,
+                        "up": -0.86349
+                    }
+                },
+                {
+                    "classification": "UAV",
+                    "identification": "UAV Description",
+                    "alarm": {
+                        "active": true,
+                        "certainty": 1
+                    },
+                    "location": {
+                        "$type": "Position3d",
+                        "height_amsl": 52.33707466137043,
+                        "lat": 51.15836795030467,
+                        "lon": 2.736868683313011
+                    },
+                    "record_number": 2,
+                    "time": 1696421607569,
+                    "velocity": {
+                        "east": -2.14297,
+                        "north": 1.69235,
+                        "up": -0.86349
+                    }
+                }
+            ],
+            "uas_id": 1
+        }
+    ],
+    "vendor_name": "Company Name",
+    "version": "0.4.1"
+}
