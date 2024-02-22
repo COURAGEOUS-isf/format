@@ -17,7 +17,7 @@ it should be included in the UAV record set[^1] using the `uav_home_location` me
 
 ### Example
 
-This is set of records extracted from the [intercepting C-UAS COURAGEOUS format example]. ########################### link to example_intercepting.
+This is set of records extracted from the [intercepting C-UAS COURAGEOUS format example](../../example_intercepting.json).
 
 ```json
 ...

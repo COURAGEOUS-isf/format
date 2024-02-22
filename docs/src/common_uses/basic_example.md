@@ -1,7 +1,7 @@
 ## Basic example
 
 
-Here are record examples extracted from the [basic COURAGEOUS example file]. ###################################link here to example_basic.json
+Here are record examples extracted from the [basic COURAGEOUS example file](../../example_basic.json).
 
 ```json
 ...
