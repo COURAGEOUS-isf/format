@@ -3,7 +3,7 @@
 
 Here are record examples extracted from the [basic COURAGEOUS example file]. ###################################link here to example_basic.json
 
-```
+```json
 ...
 {
     "alarm": {
@@ -22,7 +22,7 @@ Here are record examples extracted from the [basic COURAGEOUS example file]. ###
 ...
 ```
 
-```
+```json
 ...
 {
     "classification": "UAV",
