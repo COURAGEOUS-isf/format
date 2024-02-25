@@ -1,0 +1,53 @@
+﻿<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2"><Document><Schema name="schema_name" id="schema"><SimpleField name="record_number" type="uint"><displayName><![CDATA[<b>Record Number</b>]]></displayName></SimpleField><SimpleField name="classification" type="string"><displayName><![CDATA[<b>Classification</b>]]></displayName></SimpleField><SimpleField name="alarm" type="bool"><displayName><![CDATA[<b>Alarm</b>]]></displayName></SimpleField><SimpleField name="alarm_certainty" type="float"><displayName><![CDATA[<b>Alarm Certainty</b>]]></displayName></SimpleField><SimpleField name="identification" type="string"><displayName><![CDATA[<b>Identification</b>]]></displayName></SimpleField><SimpleField name="velocity" type="string"><displayName><![CDATA[<b>Velocity</b>]]></displayName></SimpleField></Schema><Style id="track_style"><IconStyle><scale>0.5</scale><Icon><href>http://earth.google.com/images/kml-icons/track-directional/track-0.png</href></Icon></IconStyle><LineStyle><colorMode>random</colorMode><width>5</width></LineStyle><BalloonStyle><text><![CDATA[<b>Track $[name]</b></br>
+Select a point on the track for more information.]]></text></BalloonStyle></Style><Style id="origin_style"><IconStyle><Icon><href>http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png</href></Icon><scale>0.5</scale></IconStyle><BalloonStyle><text><![CDATA[<table border="1">
+    <tr>
+        <th scope="row" style="text-align: left;">
+            $[schema_name/record_number/displayName]
+        </th>
+        <td style="text-align: left;">
+            $[schema_name/record_number]
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" style="text-align: left;">
+            $[schema_name/classification/displayName]
+        </th>
+        <td style="text-align: left;">
+            $[schema_name/classification]
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" style="text-align: left;">
+            $[schema_name/alarm/displayName]
+        </th>
+        <td style="text-align: left;">
+            $[schema_name/alarm]
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" style="text-align: left;">
+            $[schema_name/alarm_certainty/displayName]
+        </th>
+        <td style="text-align: left;">
+            $[schema_name/alarm_certainty]
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" style="text-align: left;">
+            $[schema_name/identification/displayName]
+        </th>
+        <td style="text-align: left;">
+            $[schema_name/identification]
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" style="text-align: left;">
+            $[schema_name/velocity/displayName]
+        </th>
+        <td style="text-align: left;">
+            $[schema_name/velocity]
+        </td>
+    </tr>
+</table>]]></text></BalloonStyle></Style><Style id="cuas_style"><IconStyle><Icon><href>http://maps.google.com/mapfiles/kml/paddle/blu-circle.png</href></Icon><scale>0.5</scale></IconStyle><BalloonStyle><text><![CDATA[<b>CUAS</b></br>
+                Static Location of the CUAS.]]></text></BalloonStyle></Style><Style id="uav_home_style"><IconStyle><Icon><href>https://maps.google.com/mapfiles/kml/paddle/H.png</href></Icon><scale>0.5</scale></IconStyle><BalloonStyle><text><![CDATA[<b>UAV Home location</b></br>
+                        The home location of the UAV intercepted by the CUAS.]]></text></BalloonStyle></Style><Folder><name>Detection Sets</name><Folder><name>Unnamed detection set</name><description>UAV unique ID: None</description><Placemark><name>4</name><ExtendedData><SchemaData schemaUrl="#schema"><SimpleData name="record_number">4</SimpleData><SimpleData name="classification">Unknown</SimpleData><SimpleData name="alarm">On</SimpleData><SimpleData name="alarm_certainty">100</SimpleData><SimpleData name="identification">&lt;i&gt;empty&lt;/i&gt;</SimpleData><SimpleData name="velocity">&lt;i&gt;not given&lt;/i&gt;</SimpleData></SchemaData></ExtendedData><styleUrl>origin_style</styleUrl><TimeStamp><when>2023-10-02T13:57:48.48Z</when></TimeStamp><LineString><extrude>0</extrude><tessellate>0</tessellate><altitudeMode>absolute</altitudeMode><coordinates>2.738243,51.156888,11.4 2.7392273338853164,51.157538842386124,15.260273589381331</coordinates></LineString></Placemark><Placemark><name>5</name><ExtendedData><SchemaData schemaUrl="#schema"><SimpleData name="record_number">5</SimpleData><SimpleData name="classification">Unknown</SimpleData><SimpleData name="alarm">On</SimpleData><SimpleData name="alarm_certainty">100</SimpleData><SimpleData name="identification">&lt;i&gt;empty&lt;/i&gt;</SimpleData><SimpleData name="velocity">&lt;i&gt;not given&lt;/i&gt;</SimpleData></SchemaData></ExtendedData><styleUrl>origin_style</styleUrl><TimeStamp><when>2023-10-02T13:57:49.035Z</when></TimeStamp><LineString><extrude>0</extrude><tessellate>0</tessellate><altitudeMode>absolute</altitudeMode><coordinates>2.738243,51.156888,11.4 2.7392119024335324,51.157547829831536,15.47826773576542</coordinates></LineString></Placemark></Folder></Folder><Folder><name>Tracks</name><Folder><name>Track name (UAV)</name><Placemark><name>UAV Home Location</name><styleUrl>uav_home_style</styleUrl><Point><extrude>false</extrude><altitudeMode>absolute</altitudeMode><coordinates>2.740512,51.157543,9</coordinates></Point></Placemark><Placemark><styleUrl>track_style</styleUrl><name>Track name (UAV)</name><gx:MultiTrack><altitudeMode>absolute</altitudeMode><gx:Track><altitudeMode>absolute</altitudeMode><when>2023-10-04T12:10:11.207Z</when><gx:coord>2.7414165702140973 51.158929232973726 47.15314324164956</gx:coord><when>2023-10-04T12:11:58.341Z</when><gx:coord>2.7383094375955803 51.15840361201752 48.20321620520593</gx:coord><when>2023-10-04T12:13:27.569Z</when><gx:coord>2.736868683313011 51.15836795030467 52.33707466137043</gx:coord><ExtendedData><SchemaData schemaUrl="#schema"><gx:SimpleArrayData name="record_number"><gx:value>0</gx:value><gx:value>1</gx:value><gx:value>2</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="classification"><gx:value>UAV</gx:value><gx:value>UAV</gx:value><gx:value>UAV</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="alarm"><gx:value>Off</gx:value><gx:value>On</gx:value><gx:value>On</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="alarm_certainty"><gx:value>55</gx:value><gx:value>70</gx:value><gx:value>100</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="identification"><gx:value>UAV description</gx:value><gx:value>UAV Description</gx:value><gx:value>UAV Description</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="velocity"><gx:value>&lt;i&gt;not given&lt;/i&gt;</gx:value><gx:value>&lt;i&gt;not given&lt;/i&gt;</gx:value><gx:value>&lt;i&gt;not given&lt;/i&gt;</gx:value></gx:SimpleArrayData></SchemaData></ExtendedData></gx:Track></gx:MultiTrack></Placemark></Folder><Folder><name>Track name (GCS)</name><Placemark><name>UAV Home Location</name><styleUrl>uav_home_style</styleUrl><Point><extrude>false</extrude><altitudeMode>absolute</altitudeMode><coordinates>2.740512,51.157543,9</coordinates></Point></Placemark><Placemark><styleUrl>track_style</styleUrl><name>Track name (GCS)</name><gx:MultiTrack><altitudeMode>absolute</altitudeMode><gx:Track><altitudeMode>absolute</altitudeMode><when>2023-10-04T12:10:11.207Z</when><gx:coord>2.740082 51.157409 9</gx:coord><when>2023-10-04T12:11:58.341Z</when><gx:coord>2.740088 51.157411 9</gx:coord><when>2023-10-04T12:13:27.569Z</when><gx:coord>2.740093 51.157413 9</gx:coord><ExtendedData><SchemaData schemaUrl="#schema"><gx:SimpleArrayData name="record_number"><gx:value>3</gx:value><gx:value>4</gx:value><gx:value>5</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="classification"><gx:value>GCS</gx:value><gx:value>GCS</gx:value><gx:value>GCS</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="alarm"><gx:value>On</gx:value><gx:value>On</gx:value><gx:value>On</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="alarm_certainty"><gx:value>100</gx:value><gx:value>100</gx:value><gx:value>100</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="identification"><gx:value>GCS Description</gx:value><gx:value>GCS Description</gx:value><gx:value>GCS Description</gx:value></gx:SimpleArrayData><gx:SimpleArrayData name="velocity"><gx:value>&lt;i&gt;not given&lt;/i&gt;</gx:value><gx:value>&lt;i&gt;not given&lt;/i&gt;</gx:value><gx:value>&lt;i&gt;not given&lt;/i&gt;</gx:value></gx:SimpleArrayData></SchemaData></ExtendedData></gx:Track></gx:MultiTrack></Placemark></Folder></Folder><Placemark><name>Static CUAS Location</name><styleUrl>cuas_style</styleUrl><Point><extrude>false</extrude><altitudeMode>absolute</altitudeMode><coordinates>2.738243,51.156888,11.4</coordinates></Point></Placemark></Document></kml>
