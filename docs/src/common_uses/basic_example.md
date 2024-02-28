@@ -1,8 +1,8 @@
 ## Basic example
 
-
 Here are record examples extracted from the [basic COURAGEOUS example file](../res/example_basic.json).
 
+Using BearingElevation:
 ```json
 ...
 {
@@ -21,7 +21,7 @@ Here are record examples extracted from the [basic COURAGEOUS example file](../r
 },
 ...
 ```
-
+Using Position3d and including the `identification` and `velocity` optional fields:
 ```json
 ...
 {
