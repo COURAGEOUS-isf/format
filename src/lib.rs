@@ -39,7 +39,7 @@ impl JsonSchema for Version {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
 pub struct Document {
-    /// The 3D GPS location of the CUAS. Can be overriden per Record, but even if overriden this
+    /// The 3D GPS location of the C-UAS. Can be overriden per Record, but even if overriden this
     /// value must exist and be a valid position.
     pub static_cuas_location: Position3d,
     // schema present too, which is where the version/standard is defined
